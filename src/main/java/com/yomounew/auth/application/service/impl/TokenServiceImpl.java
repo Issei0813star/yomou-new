@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,8 @@ public class TokenServiceImpl implements TokenService {
         }
     }
 
-    private Claims getClaims(String token) {
+    @Override
+    public Claims getClaims(String token) {
         try{
             SecretKey key = this.secretKeyManager.getSecretKey();
 
@@ -43,5 +45,20 @@ public class TokenServiceImpl implements TokenService {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    @Override
+    public String generateToken(String userName, String email) {
+        Date now = new Date();
+        Date expirationDate = new Date(now.getTime() + 864000000);
+
+        SecretKey key = secretKeyManager.getSecretKey();
+
+        return Jwts.builder()
+                .setExpiration(expirationDate)
+                .claim("user_name", userName)
+                .claim("email", email)
+                .signWith(key)
+                .compact();
     }
 }
