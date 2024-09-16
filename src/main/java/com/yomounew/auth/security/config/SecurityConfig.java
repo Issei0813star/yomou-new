@@ -1,4 +1,4 @@
-package com.yomounew.security;
+package com.yomounew.auth.security.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

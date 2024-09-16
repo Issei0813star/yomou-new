@@ -1,4 +1,4 @@
-package com.yomounew.security;
+package com.yomounew.auth.security.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
