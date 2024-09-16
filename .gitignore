@@ -39,3 +39,8 @@ api-spec.yml
 swagger-config.yml
 swagger-ui.html
 
+# properties
+src/main/resources/application.yml
+src/main/resources/application-local.yml
+src/test/resources/application.yml
+
