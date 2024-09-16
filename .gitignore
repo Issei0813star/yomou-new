@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# OpenAPI仕様書
+api-spec.yml
+
+# Swagger UIの設定ファイル
+swagger-config.yml
+swagger-ui.html
+
