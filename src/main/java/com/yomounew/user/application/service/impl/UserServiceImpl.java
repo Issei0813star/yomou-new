@@ -1,5 +1,6 @@
 package com.yomounew.user.application.service.impl;
 
+import com.yomounew.auth.application.service.TokenService;
 import com.yomounew.user.application.dto.requests.LoginRequest;
 import com.yomounew.user.application.dto.responses.LoginResponse;
 import com.yomounew.user.application.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final TokenService tokenService;
 
     public LoginResponse login(LoginRequest req) {
 
@@ -37,8 +39,8 @@ public class UserServiceImpl implements UserService {
             throw new IllegalStateException();
         }
 
-        //TODO token生成
-        return new LoginResponse(user.getId(), "dummyToken");
+        String token = tokenService.generateToken(user.getUserName(), user.getEmail(), user.getId());
+        return new LoginResponse(user.getId(), token);
     }
 
 }

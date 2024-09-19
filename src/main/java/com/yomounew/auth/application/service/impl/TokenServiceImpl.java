@@ -48,7 +48,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public String generateToken(String userName, String email) {
+    public String generateToken(String userName, String email, Long userId) {
         Date now = new Date();
         Date expirationDate = new Date(now.getTime() + 864000000);
 
@@ -58,6 +58,7 @@ public class TokenServiceImpl implements TokenService {
                 .setExpiration(expirationDate)
                 .claim("user_name", userName)
                 .claim("email", email)
+                .claim("user_id", userId)
                 .signWith(key)
                 .compact();
     }
