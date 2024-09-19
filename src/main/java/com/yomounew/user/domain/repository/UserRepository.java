@@ -8,9 +8,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * email or userNameからユーザーを取得
-     * @param userId String
+     * @param userIdentifier String
      * @return user User
      */
-    @Query("SELECT u FROM User u WHERE u.email = :userId OR u.userName = :userId")
-    User findUser(String userId);
+    @Query("SELECT u FROM User u WHERE u.email = :userIdentifier OR u.userName = :userIdentifier")
+    User findUserByUserNameOrEmail(String userIdentifier);
 }
