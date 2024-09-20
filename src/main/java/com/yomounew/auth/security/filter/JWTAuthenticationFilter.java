@@ -3,6 +3,8 @@ package com.yomounew.auth.security.filter;
 import com.yomounew.auth.application.constant.AuthKeys;
 import com.yomounew.auth.application.service.TokenService;
 import com.yomounew.auth.security.CustomUser;
+import com.yomounew.exception.YomouException;
+import com.yomounew.exception.YomouMessage;
 import io.jsonwebtoken.Claims;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;
@@ -62,8 +64,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private String extractToken (String bearer){
         if(Objects.isNull(bearer) || !bearer.startsWith("Bearer ")){
-            //TODO カスタム例外
-            throw new IllegalStateException();
+            throw new YomouException(YomouMessage.INVALID_TOKEN, bearer);
         }
         return bearer.substring(7);
     }

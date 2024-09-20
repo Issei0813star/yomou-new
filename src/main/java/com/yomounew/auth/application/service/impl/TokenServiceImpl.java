@@ -2,6 +2,8 @@ package com.yomounew.auth.application.service.impl;
 
 import com.yomounew.auth.application.service.TokenService;
 import com.yomounew.auth.security.SecretKeyManager;
+import com.yomounew.exception.YomouException;
+import com.yomounew.exception.YomouMessage;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -41,8 +43,6 @@ public class TokenServiceImpl implements TokenService {
             return jws.getBody();
         }
         catch(Exception e){
-            //TODO エラーハンドリング
-            e.printStackTrace();
             throw e;
         }
     }
