@@ -12,7 +12,9 @@ public enum YomouMessage {
     INVALID_TOKEN("トークンが不正", HttpStatus.BAD_REQUEST),
     USER_NAME_OR_EMAIL_REQUIRED("ユーザー名もしくはメールアドレスを入力して下さい。", HttpStatus.BAD_REQUEST),
     PASSWORD_IS_REQUIRED("パスワードを入力してください", HttpStatus.BAD_REQUEST),
-    USER_NOT_VERIFIED("メールアドレス認証がされていないユーザーです。", HttpStatus.UNAUTHORIZED);
+    USER_NOT_VERIFIED("メールアドレス認証がされていないユーザーです。", HttpStatus.UNAUTHORIZED),
+    USER_NAME_IS_REQUIRED("ユーザー名を入力して下さい。", HttpStatus.BAD_REQUEST),
+    EMAIL_IS_REQUIRED("メールアドレスを入力してください。", HttpStatus.BAD_REQUEST);
 
     private String message;
     private HttpStatus status;

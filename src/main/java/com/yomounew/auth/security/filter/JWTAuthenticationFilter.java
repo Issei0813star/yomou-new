@@ -2,7 +2,6 @@ package com.yomounew.auth.security.filter;
 
 import com.yomounew.auth.application.constant.AuthKeys;
 import com.yomounew.auth.application.service.TokenService;
-import com.yomounew.auth.security.CustomUser;
 import com.yomounew.exception.YomouException;
 import com.yomounew.exception.YomouMessage;
 import io.jsonwebtoken.Claims;
@@ -11,10 +10,12 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,6 +23,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+
+import static java.util.Collections.emptyList;
 
 @Component
 @RequiredArgsConstructor
@@ -73,5 +76,17 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         String userName = (String) claims.get("user_name");
         UserDetails user = new CustomUser(userName, "email");
         return new UsernamePasswordAuthenticationToken(user, null, null);
+    }
+
+    @Getter
+    public static class CustomUser extends User {
+
+        private final String email;
+
+        public CustomUser(String userName, String email) {
+            super(userName, "", emptyList());
+            this.email = email;
+        }
+
     }
 }
