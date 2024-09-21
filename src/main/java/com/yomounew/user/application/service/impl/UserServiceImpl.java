@@ -11,6 +11,7 @@ import com.yomounew.user.application.dto.responses.UserCreateResponse;
 import com.yomounew.user.application.service.UserService;
 import com.yomounew.user.domain.model.entity.User;
 import com.yomounew.user.domain.repository.UserRepository;
+import com.yomounew.user.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService {
             throw new YomouException(YomouMessage.USER_NOT_VERIFIED, user.getUserName());
         }
 
-        if(!user.getPassword().equals(req.getPassword())) throw new YomouException(YomouMessage.INCORRECT_PASSWORD, req.getPassword());
+        if(Boolean.FALSE.equals(passwordHashingUtil.verifyPassword(req.getPassword(), user.getPassword()))) throw new YomouException(YomouMessage.INCORRECT_PASSWORD, req.getPassword());
 
         String token = tokenService.generateToken(user.getUserName(), user.getEmail(), user.getId());
         return new LoginResponse(user.getId(), token);
@@ -63,19 +64,21 @@ public class UserServiceImpl implements UserService {
     }
 
     private void validateCreateReq(UserCreateRequest req) {
-        if(StringUtils.isBlank(req.getUserName())) {
-            //TODO 文字数制限。DBにも制約つける
-            throw new YomouException(YomouMessage.USER_NAME_IS_REQUIRED, null);
-        }
-        if(StringUtils.isBlank(req.getEmail())) {
-            //TODO 正しい形かチェック。文字数、ユニークかも
-            throw new YomouException(YomouMessage.EMAIL_IS_REQUIRED, null);
-        }
-        if(StringUtils.isBlank(req.getPassword())) {
-            //TODO 文字数チェック
-            throw new YomouException(YomouMessage.PASSWORD_IS_REQUIRED, null);
-        }
+        //ユーザー名
+        String userName = req.getUserName();
+        if(StringUtils.isBlank(userName)) throw new YomouException(YomouMessage.USER_NAME_IS_REQUIRED, null);
+        if(userRepository.existsByEmail(userName)) throw new YomouException(YomouMessage.USER_NAME_NOT_UNIQUE, null);
+        if(userName.length() < 4 || userName.length() > 30) throw new YomouException(YomouMessage.USER_NAME_LENGTH_INVALID, null);
+
+        //メールアドレス
+        String email = req.getEmail();
+        if(StringUtils.isBlank(email))  throw new YomouException(YomouMessage.EMAIL_IS_REQUIRED, null);
+        if(userRepository.existsByEmail(email)) throw new YomouException(YomouMessage.EMAIL_NOT_UNIQUE, null);
+        if(Boolean.FALSE.equals(EmailValidator.isValidEmail(email))) throw new YomouException(YomouMessage.EMAIL_IS_INVALID, null);
+
+        //パスワード
+        String password = req.getPassword();
+        if(StringUtils.isBlank(password)) throw new YomouException(YomouMessage.PASSWORD_IS_REQUIRED, null);
+        if(password.length() < 8 || password.length() > 20) throw new YomouException(YomouMessage.PASSWORD_LENGTH_INVALID, null);
     }
-
-
 }
