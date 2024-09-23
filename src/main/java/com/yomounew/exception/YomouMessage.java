@@ -15,8 +15,8 @@ public enum YomouMessage {
     USER_NOT_VERIFIED("メールアドレス認証がされていないユーザーです。", HttpStatus.UNAUTHORIZED),
     USER_NAME_IS_REQUIRED("ユーザー名を入力して下さい。", HttpStatus.BAD_REQUEST),
     EMAIL_IS_REQUIRED("メールアドレスを入力してください。", HttpStatus.BAD_REQUEST),
-    USER_NAME_LENGTH_INVALID("ユーザー名は4文字以上30文字以下で入力してください。", HttpStatus.BAD_REQUEST),
-    PASSWORD_LENGTH_INVALID("パスワードは8文字以上20文字以下で入力してください。", HttpStatus.BAD_REQUEST),
+    USER_NAME_LENGTH_INVALID("ユーザー名は4文字以上30文字以内で入力してください。", HttpStatus.BAD_REQUEST),
+    PASSWORD_LENGTH_INVALID("パスワードは8文字以上20文字以内で入力してください。", HttpStatus.BAD_REQUEST),
     EMAIL_IS_INVALID("正しいメールアドレスを入力してください。", HttpStatus.BAD_REQUEST),
     USER_NAME_NOT_UNIQUE("すでに存在するユーザー名です。", HttpStatus.CONFLICT);
 
