@@ -31,7 +31,7 @@ import static java.util.Collections.emptyList;
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
-    private final List<String> excludePaths = List.of("/user/login", "/user/create");
+    private final List<String> excludePaths = List.of("/user/login", "/user");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

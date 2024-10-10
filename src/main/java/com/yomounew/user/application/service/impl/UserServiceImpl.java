@@ -9,6 +9,7 @@ import com.yomounew.user.application.dto.requests.UserCreateRequest;
 import com.yomounew.user.application.dto.responses.LoginResponse;
 import com.yomounew.user.application.dto.responses.UserCreateResponse;
 import com.yomounew.user.application.service.UserService;
+import com.yomounew.user.application.service.async.AsyncUserService;
 import com.yomounew.user.domain.model.entity.User;
 import com.yomounew.user.domain.repository.UserRepository;
 import com.yomounew.user.utils.EmailValidator;
@@ -17,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TokenService tokenService;
     private final PasswordHashingUtil passwordHashingUtil;
+    private final AsyncUserService asyncUserService;
 
     public LoginResponse login(LoginRequest req) {
         validateLoginReq(req);
@@ -56,9 +59,9 @@ public class UserServiceImpl implements UserService {
         user.setUserName(req.getUserName());
         user.setEmail(req.getEmail());
         user.setPassword(passwordHashingUtil.encodePassword(req.getPassword()));
-
         User createdUser = userRepository.save(user);
-        //TODO 認証メール送信
+
+        asyncUserService.asyncSendEmail(createdUser.getId());
 
         return new UserCreateResponse(createdUser.getId(), createdUser.getUserName(), createdUser.getEmail());
     }
