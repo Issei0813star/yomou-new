@@ -12,13 +12,12 @@ import com.yomounew.user.application.service.UserService;
 import com.yomounew.user.application.service.async.AsyncUserService;
 import com.yomounew.user.domain.model.entity.User;
 import com.yomounew.user.domain.repository.UserRepository;
-import com.yomounew.user.utils.EmailValidator;
+import com.yomounew.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor

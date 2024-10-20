@@ -1,4 +1,4 @@
-package com.yomounew.user.utils;
+package com.yomounew.utils;
 
 import java.util.regex.Pattern;
 
