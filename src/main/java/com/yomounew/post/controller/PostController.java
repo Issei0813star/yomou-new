@@ -16,7 +16,7 @@ public class PostController {
 
     private final PostsService postsService;
 
-    @PostMapping("/posts")
+    @PostMapping("/timeline")
     public GetPostsResponse getPosts(@RequestBody GetPostsRequest req) {
         return postsService.getPosts(req);
     }
