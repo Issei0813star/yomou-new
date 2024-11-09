@@ -62,7 +62,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean isExcludePath(String path) {
-        return this.excludePaths.contains(path);
+//        return this.excludePaths.contains(path);
+        //TODO 一旦無効
+        return true;
     }
 
     private String extractToken (String bearer){
