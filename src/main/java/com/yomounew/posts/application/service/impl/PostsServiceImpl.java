@@ -1,7 +1,5 @@
 package com.yomounew.posts.application.service.impl;
 
-import com.yomounew.books.application.dto.BookDto;
-import com.yomounew.books.application.service.BookService;
 import com.yomounew.posts.application.dto.PostDto;
 import com.yomounew.posts.application.dto.requests.GetTimelineRequest;
 import com.yomounew.posts.application.dto.responses.GetTimelineResponse;
@@ -24,7 +22,6 @@ import java.util.Optional;
 public class PostsServiceImpl implements PostsService {
 
     private final PostRepository postRepository;
-    private final BookService bookService;
 
     public GetTimelineResponse getTimeline(GetTimelineRequest req) {
         int pageNumber = Optional.ofNullable(req.getPageNumber()).orElse(0);
@@ -37,10 +34,8 @@ public class PostsServiceImpl implements PostsService {
                 .map(e -> {
                     User user = e.getAuthor();
                     UserDto author = new UserDto(user.getId(), user.getUserName());
-                    BookDto book = bookService.searchBookByKeyword(e.getBookTitle());
-                    System.out.println(book);
 
-                    return new PostDto(e.getId(), author, e.getReviewPoint(), e.getBookTitle(), e.getHeader(), e.getContent(), ConvertTimestampUtils.convertTimestampToString(e.getPostedAt()), book);
+                    return new PostDto(e.getId(), author, e.getReviewPoint(), e.getBookTitle(), e.getHeader(), e.getContent(), ConvertTimestampUtils.convertTimestampToString(e.getPostedAt()));
                 })
                 .toList();
 

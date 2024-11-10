@@ -1,6 +1,5 @@
 package com.yomounew.posts.application.dto;
 
-import com.yomounew.books.application.dto.BookDto;
 import com.yomounew.users.application.dto.UserDto;
 import lombok.Data;
 
@@ -14,5 +13,4 @@ public class PostDto {
     private final String header;
     private final String content;
     private final String postedAt;
-    private final BookDto book;
 }
